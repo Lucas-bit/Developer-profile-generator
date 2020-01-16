@@ -34,12 +34,17 @@ function promptUser() {
     {
       type: "input",
       name: "github",
-      message: "What is your GitHub Username"
+      message: "What is your GitHub Username?"
     },
     {
       type: "input",
       name: "linkedin",
-      message: "What is your LinkedIn URL."
+      message: "What is your LinkedIn URL?"
+    },
+    {
+      type: "input",
+      name: "email",
+      message: "What is your email?"
     }
   ]);
 }
@@ -58,11 +63,15 @@ function generateHTML(answers) {
   
   <div class="container">
     <h1 class="display-4">Hi! My name is ${answers.name}</h1>
-    <p class="lead">I am from ${answers.location}.</p>
+    <p class="lead">My current location is ${answers.location}.</p>
+    <p class="lead">I have ${answers.repositories} repositories.</p>
+    <p class="lead">I have ${answers.followers} followers.</p>
+    <p class="lead">I have ${answers.stars} GitHub stars.</p>
     <h3>Example heading <span class="badge badge-secondary">Contact Me</span></h3>
     <ul class="list-group">
       <li class="list-group-item">My GitHub username is ${answers.github}</li>
       <li class="list-group-item">LinkedIn: ${answers.linkedin}</li>
+      <li class="list-group-item">E-mail: ${answers.email}</li>
     </ul>
   </div>
 </div>
