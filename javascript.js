@@ -1,11 +1,9 @@
-const personalAccessToken = '6f39efe4bab2170971a2eb50aa0b9834989e30fb'
 
 
 const inquirer = require("inquirer");
 const fs = require("fs");
 const util = require("util");
 const axios = require("axios")
-
 const writeFileAsync = util.promisify(fs.writeFile);
 
 function promptUser() {
@@ -15,16 +13,17 @@ function promptUser() {
   }])
   .then(function({ username, color }) {
     const queryUrl = `https://api.github.com/search/users?q=${ username }`
-    return axios.get(queryUrl)
+    return axios.get(queryUrl) 
   })
   .then((res) => {
-    const profileInfo = new Array(res.data.items[0])
-    console.log(profileInfo)([]    
+      const profileInfo = new Array(res.data.items[0])
+      console.log(profileInfo)
+    })}
 
-      )})}
+     
 
 
-function generateHTML(answers) {
+generateHTML = (res) => {
   return `
 <!DOCTYPE html>
 <html lang="en">
@@ -37,11 +36,12 @@ function generateHTML(answers) {
 <body>
   
   <div class="container">
-    <h1 class="display-4">Hi! My name is ${answers.name}</h1>
-    <p class="lead">My current location is ${answers.location}.</p>
+    <h1 class="display-4">Hi! My name is ${res.data.login}</h1>
+    <img = ${res.avatar_url}>
+    <p class="lead">My current location is .</p>
     <p class="lead">I have ${answers.repositories} repositories.</p>
-    <p class="lead">I have ${answers.followers} followers.</p>
-    <p class="lead">I have ${answers.stars} GitHub stars.</p>
+    <p class="lead">I have ${res.followers_url} followers.</p>
+    <p class="lead">I have ${res.starred_url} GitHub stars.</p>
     <h3>Example heading <span class="badge badge-secondary">Contact Me</span></h3>
     <ul class="list-group">
       <li class="list-group-item">My GitHub username is ${answers.github}</li>
@@ -51,12 +51,12 @@ function generateHTML(answers) {
   </div>
 </div>
 </body>
-</html>`;
+</html>`
 }
 
 promptUser()
-  .then(function(answers) {
-    const html = generateHTML(answers);
+  .then(function(res) {
+    const html = generateHTML(res);
 
     return writeFileAsync("new-index.html", html);
   })
@@ -65,4 +65,4 @@ promptUser()
   })
   .catch(function(err) {
     console.log(err);
-  });
+  })
