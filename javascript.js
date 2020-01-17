@@ -1,53 +1,28 @@
+const personalAccessToken = '6f39efe4bab2170971a2eb50aa0b9834989e30fb'
+
+
 const inquirer = require("inquirer");
 const fs = require("fs");
 const util = require("util");
+const axios = require("axios")
 
 const writeFileAsync = util.promisify(fs.writeFile);
 
 function promptUser() {
-  return inquirer.prompt([
-    {
-      type: "input",
-      name: "name",
-      message: "What is your name?"
-    },
-    {
-      type: "input",
-      name: "location",
-      message: "What is your current location?"
-    },
-    {
-      type: "input",
-      name: "repositories",
-      message: "How many public repositories do you have?"
-    },
-    {
-      type: "input",
-      name: "followers",
-      message: "How many followers do you have?"
-    },
-    {
-      type: "input",
-      name: "stars",
-      message: "How many Github stars do you have?"
-    },
-    {
-      type: "input",
-      name: "github",
-      message: "What is your GitHub Username?"
-    },
-    {
-      type: "input",
-      name: "linkedin",
-      message: "What is your LinkedIn URL?"
-    },
-    {
-      type: "input",
-      name: "email",
-      message: "What is your email?"
-    }
-  ]);
-}
+  return inquirer.prompt([{
+    message: "Enter your GitHub username",
+    name: "username"
+  }])
+  .then(function({ username, color }) {
+    const queryUrl = `https://api.github.com/search/users?q=${ username }`
+    return axios.get(queryUrl)
+  })
+  .then((res) => {
+    const profileInfo = new Array(res.data.items[0])
+    console.log(profileInfo)([]    
+
+      )})}
+
 
 function generateHTML(answers) {
   return `
