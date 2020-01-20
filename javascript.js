@@ -8,17 +8,21 @@ const writeFileAsync = util.promisify(fs.writeFile);
 
 function promptUser() {
   return inquirer.prompt([{
-    message: "Enter your GitHub username",
-    name: "username",
+      message: "Enter your GitHub username",
+      name: "username",
+  }, {
+      message: "Enter your fav color",
+      name: "color"
   }])
   .then(function({ username, color }) {
     const queryUrl = `https://api.github.com/search/users?q=${username}`
     return axios.get(queryUrl) 
+
   })
   .then((res) => {
-      const profileInfo = res.map(data.items[0])
+      const profileInfo = res.data.items[0]
       console.log(profileInfo)
-    })}
+    })};
   
 
      //.name somehwere? .JSON?
@@ -39,6 +43,7 @@ generateHTML = (res) => {
   
 <div class="jumbotron jumbotron-fluid">
   <div class="container">
+  <h3><span class="badge badge-secondary">Contact Me</span></h3>
     <h1 class="display-4">Hi! My name is ${res.login}</h1>
     <img = ${res.avatar_url}>
     <p class="lead">My current location is .</p>
