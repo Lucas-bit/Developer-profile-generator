@@ -21,29 +21,28 @@ function promptUser() {
         .then((res) => {
           const queryUrlRepos = `https://api.github.com/users/${username}/repos`
           axios.get(queryUrlRepos)
-          .then((repoRes) => {
-              console.log(color)
+            .then((repoRes) => {
               const stars = 10
               const profileInfo = { stars, color, ...res.data }
               // console.log(profileInfo)
               return profileInfo
-          })
-          .then(function (res) {
-            console.log(res)
-            const html = generateHTML(res);
-        
-            return writeFileAsync("new-index.html", html);
-          })
-          .then(function () {
-            console.log("Successfully wrote to new-index.html");
-          })
-          .catch(function (err) {
-            console.log(err);
-          })
-          
+            })
+            .then(function (res) {
+              console.log(res)
+              const html = generateHTML(res);
+
+              return writeFileAsync("new-index.html", html);
+            })
+            .then(function () {
+              console.log("Successfully wrote to new-index.html");
+            })
+            .catch(function (err) {
+              console.log(err);
+            })
+
         })
-        
-      
+
+
     })
 
 };
@@ -88,26 +87,12 @@ generateHTML = (res) => {
       <meta http-equiv="X-UA-Compatible" content="ie=edge" />
       <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"/>
       <link href="https://fonts.googleapis.com/css?family=BioRhyme|Cabin&display=swap" rel="stylesheet">
+      <link rel="stylesheet" href = "stylesheet.css">
       <title>Document</title>
       <style>
-          @page {
-            margin: 0;
-          }
-         *,
-         *::after,
-         *::before {
-         box-sizing: border-box;
-         }
-         html, body {
-         padding: 0;
-         margin: 0;
-         }
-         html, body, .wrapper {
-         height: 100%;
-         }
+         
          .wrapper {
          background-color: ${res.color};
-         padding-top: 100px;
          }
          body {
           background-color: white;
@@ -115,7 +100,7 @@ generateHTML = (res) => {
           font-family: 'Cabin', sans-serif;
           }
           main {
-          background-color: #E9EDEE;
+          background-color: ${res.color};
           height: auto;
           padding-top: 30px;
           }
@@ -226,13 +211,13 @@ generateHTML = (res) => {
 <body>
   
 <div class="jumbotron jumbotron-fluid wrapper">
-  <div class="container">
-  <h3><span class="badge badge-secondary">Contact Me</span></h3>
-    <h1 class="display-4">Hi! My name is ${res.name}</h1>
-    <img = ${res.avatar_url}>
+  <div class="container wrapper">
+  <h1> About Me: </h1>
+    <h2 class="display-4">Hi! My name is ${res.name}</h2>
+    <img class= "image" src = "${res.avatar_url}">
     <p class="lead">My current location is ${res.location}.</p>
-    <p class="lead">I have ${res.repositories} repositories.</p>
-    <p class="lead">I have ${res.followers} followers.</p>
+    <p class="lead">I have ${res.public_repos} repositories.</p>
+    <p class="lead">I have ${res.followers} follower(s).</p>
     <p class="lead">I have ${res.stars} GitHub stars.</p>
     <h3><span class="badge badge-secondary">Contact Me</span></h3>
     <ul class="list-group">
@@ -247,5 +232,5 @@ generateHTML = (res) => {
 }
 
 promptUser()
- 
+
 
