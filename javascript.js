@@ -5,6 +5,7 @@ const fs = require("fs");
 const util = require("util");
 const axios = require("axios").default
 const writeFileAsync = util.promisify(fs.writeFile);
+const pdf = require("html-pdf")
 
 function promptUser() {
   return inquirer.prompt([{
@@ -24,7 +25,7 @@ function promptUser() {
             .then((repoRes) => {
               const stars = 10
               const profileInfo = { stars, color, ...res.data }
-              // console.log(profileInfo)
+              console.log(queryUrlRepos)
               return profileInfo
             })
             .then(function (res) {
@@ -212,25 +213,30 @@ generateHTML = (res) => {
   
 <div class="jumbotron jumbotron-fluid wrapper">
   <div class="container wrapper">
-  <h1> About Me: </h1>
-    <h2 class="display-4">Hi! My name is ${res.name}</h2>
+    <h1 class="display-4">Hi! My name is ${res.name}</h1>
     <img class= "image" src = "${res.avatar_url}">
-    <p class="lead">My current location is ${res.location}.</p>
-    <p class="lead">I have ${res.public_repos} repositories.</p>
-    <p class="lead">I have ${res.followers} follower(s).</p>
-    <p class="lead">I have ${res.stars} GitHub stars.</p>
+    <h2> About Me: </h2>
+    <p class="lead"> Github Bio: ${res.bio}
+    <p class="lead"> My current location is <span><a href = "https://www.google.com/maps/place/${res.location}">${res.location}</a></span></p>
+    <p class="lead"> I have ${res.public_repos} repositories.</p>
+    <p class="lead"> I have ${res.followers} follower(s).</p>
+    <p class="lead"> I have ${res.starred_url} GitHub stars.</p>
     <h3><span class="badge badge-secondary">Contact Me</span></h3>
-    <ul class="list-group">
-      <li class="list-group-item">My GitHub username is ${res.login}</li>
-      <li class="list-group-item">LinkedIn: ${res.linkedin}</li>
-      <li class="list-group-item">E-mail: ${res.email}</li>
-    </ul>
-  </div>
+    <div class = contact-me>
+    <p class="list-group-item">My GitHub username is <span><a href = "https://github.com/${res.login}">${res.login}</a></span> </p>
+    <p class="list-group-item">My portfolio/blog is located here <span><a href = "https://github.com/${res.blog}">${res.blog}</a></span></p>
+    </div>
+    </div>
 </div>
 </body>
 </html>`
 }
 
 promptUser()
+
+
+.catch(function (err) {
+  console.log(err);
+})
 
 
