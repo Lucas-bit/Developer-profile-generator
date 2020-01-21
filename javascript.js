@@ -8,51 +8,235 @@ const writeFileAsync = util.promisify(fs.writeFile);
 
 function promptUser() {
   return inquirer.prompt([{
-      message: "Enter your GitHub username",
-      name: "username",
+    message: "Enter your GitHub username",
+    name: "username",
   }, {
-      message: "Enter your fav color",
-      name: "color"
+    message: "Enter your fav color",
+    name: "color"
   }])
-  .then(function({ username, color }) {
-    const queryUrl = `https://api.github.com/search/users?q=${username}`
-    return axios.get(queryUrl) 
+    .then(function ({ username, color }) {
+      const queryUrl = `https://api.github.com/users/${username}`
+      axios.get(queryUrl)
 
-  })
-  .then((res) => {
-      const profileInfo = res.data.items[0]
-      console.log(profileInfo)
-    })};
-  
+        .then((res) => {
+          const queryUrlRepos = `https://api.github.com/users/${username}/repos`
+          axios.get(queryUrlRepos)
+          .then((repoRes) => {
+              console.log(color)
+              const stars = 10
+              const profileInfo = { stars, color, ...res.data }
+              // console.log(profileInfo)
+              return profileInfo
+          })
+          .then(function (res) {
+            console.log(res)
+            const html = generateHTML(res);
+        
+            return writeFileAsync("new-index.html", html);
+          })
+          .then(function () {
+            console.log("Successfully wrote to new-index.html");
+          })
+          .catch(function (err) {
+            console.log(err);
+          })
+          
+        })
+        
+      
+    })
 
-     //.name somehwere? .JSON?
+};
 
+//stargazers_count (for stars, go through the repos and adds up all the stars)
+
+//.name somehwere? .JSON?
+const colors = {
+  green: {
+    wrapperBackground: "#E6E1C3",
+    headerBackground: "#C1C72C",
+    headerColor: "black",
+    photoBorderColor: "#black"
+  },
+  blue: {
+    wrapperBackground: "#5F64D3",
+    headerBackground: "#26175A",
+    headerColor: "white",
+    photoBorderColor: "#73448C"
+  },
+  pink: {
+    wrapperBackground: "#879CDF",
+    headerBackground: "#FF8374",
+    headerColor: "white",
+    photoBorderColor: "#FEE24C"
+  },
+  red: {
+    wrapperBackground: "#DE9967",
+    headerBackground: "#870603",
+    headerColor: "white",
+    photoBorderColor: "white"
+  }
+};
 
 generateHTML = (res) => {
   return `
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-  <link rel="stylesheet" href="stylesheet.css">
-  <title>Document</title>
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"/>
+      <link href="https://fonts.googleapis.com/css?family=BioRhyme|Cabin&display=swap" rel="stylesheet">
+      <title>Document</title>
+      <style>
+          @page {
+            margin: 0;
+          }
+         *,
+         *::after,
+         *::before {
+         box-sizing: border-box;
+         }
+         html, body {
+         padding: 0;
+         margin: 0;
+         }
+         html, body, .wrapper {
+         height: 100%;
+         }
+         .wrapper {
+         background-color: ${res.color};
+         padding-top: 100px;
+         }
+         body {
+          background-color: white;
+          -webkit-print-color-adjust: exact !important;
+          font-family: 'Cabin', sans-serif;
+          }
+          main {
+          background-color: #E9EDEE;
+          height: auto;
+          padding-top: 30px;
+          }
+          h1, h2, h3, h4, h5, h6 {
+          font-family: 'BioRhyme', serif;
+          margin: 0;
+          }
+          h1 {
+          font-size: 3em;
+          }
+          h2 {
+          font-size: 2.5em;
+          }
+          h3 {
+          font-size: 2em;
+          }
+          h4 {
+          font-size: 1.5em;
+          }
+          h5 {
+          font-size: 1.3em;
+          }
+          h6 {
+          font-size: 1.2em;
+          }
+          .photo-header {
+          position: relative;
+          margin: 0 auto;
+          margin-bottom: -50px;
+          display: flex;
+          justify-content: center;
+          flex-wrap: wrap;
+          background-color: ${colors[res.color].headerBackground};
+          color: ${colors[res.color].headerColor};
+          padding: 10px;
+          width: 95%;
+          border-radius: 6px;
+          }
+          .photo-header img {
+          width: 250px;
+          height: 250px;
+          border-radius: 50%;
+          object-fit: cover;
+          margin-top: -75px;
+          border: 6px solid ${colors[res.color].photoBorderColor};
+          box-shadow: rgba(0, 0, 0, 0.3) 4px 1px 20px 4px;
+          }
+          .photo-header h1, .photo-header h2 {
+          width: 100%;
+          text-align: center;
+          }
+          .photo-header h1 {
+          margin-top: 10px;
+          }
+          .links-nav {
+          width: 100%;
+          text-align: center;
+          padding: 20px 0;
+          font-size: 1.1em;
+          }
+          .nav-link {
+          display: inline-block;
+          margin: 5px 10px;
+          }
+          .workExp-date {
+          font-style: italic;
+          font-size: .7em;
+          text-align: right;
+          margin-top: 10px;
+          }
+          .container {
+          padding: 50px;
+          padding-left: 100px;
+          padding-right: 100px;
+          }
+          .row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-top: 20px;
+            margin-bottom: 20px;
+          }
+          .card {
+            padding: 20px;
+            border-radius: 6px;
+            background-color: ${colors[res.color].headerBackground};
+            color: ${colors[res.color].headerColor};
+            margin: 20px;
+          }
+          
+          .col {
+          flex: 1;
+          text-align: center;
+          }
+          a, a:hover {
+          text-decoration: none;
+          color: inherit;
+          font-weight: bold;
+          }
+          @media print { 
+           body { 
+             zoom: .75; 
+           } 
+          }
+         
+      </style>
 </head>
 <body>
   
-<div class="jumbotron jumbotron-fluid">
+<div class="jumbotron jumbotron-fluid wrapper">
   <div class="container">
   <h3><span class="badge badge-secondary">Contact Me</span></h3>
-    <h1 class="display-4">Hi! My name is ${res.login}</h1>
+    <h1 class="display-4">Hi! My name is ${res.name}</h1>
     <img = ${res.avatar_url}>
-    <p class="lead">My current location is .</p>
+    <p class="lead">My current location is ${res.location}.</p>
     <p class="lead">I have ${res.repositories} repositories.</p>
-    <p class="lead">I have ${res.followers_url} followers.</p>
-    <p class="lead">I have ${res.starred_url} GitHub stars.</p>
+    <p class="lead">I have ${res.followers} followers.</p>
+    <p class="lead">I have ${res.stars} GitHub stars.</p>
     <h3><span class="badge badge-secondary">Contact Me</span></h3>
     <ul class="list-group">
-      <li class="list-group-item">My GitHub username is ${res.github}</li>
+      <li class="list-group-item">My GitHub username is ${res.login}</li>
       <li class="list-group-item">LinkedIn: ${res.linkedin}</li>
       <li class="list-group-item">E-mail: ${res.email}</li>
     </ul>
@@ -63,14 +247,5 @@ generateHTML = (res) => {
 }
 
 promptUser()
-  .then(function(res) {
-    const html = generateHTML(res);
+ 
 
-    return writeFileAsync("new-index.html", html);
-  })
-  .then(function() {
-    console.log("Successfully wrote to new-index.html");
-  })
-  .catch(function(err) {
-    console.log(err);
-  })
