@@ -5,7 +5,6 @@ const fs = require("fs");
 const util = require("util");
 const axios = require("axios").default
 const writeFileAsync = util.promisify(fs.writeFile);
-const pdf = require("html-pdf")
 
 function promptUser() {
   return inquirer.prompt([{
@@ -220,7 +219,6 @@ generateHTML = (res) => {
     <p class="lead"> My current location is <span><a href = "https://www.google.com/maps/place/${res.location}">${res.location}</a></span></p>
     <p class="lead"> I have ${res.public_repos} repositories.</p>
     <p class="lead"> I have ${res.followers} follower(s).</p>
-    <p class="lead"> I have ${res.starred_url} GitHub stars.</p>
     <h3><span class="badge badge-secondary">Contact Me</span></h3>
     <div class = contact-me>
     <p class="list-group-item">My GitHub username is <span><a href = "https://github.com/${res.login}">${res.login}</a></span> </p>
@@ -230,10 +228,9 @@ generateHTML = (res) => {
 </div>
 </body>
 </html>`
+        
 }
-
 promptUser()
-
 
 .catch(function (err) {
   console.log(err);
