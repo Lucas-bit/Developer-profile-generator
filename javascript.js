@@ -5,7 +5,7 @@ const fs = require("fs");
 const util = require("util");
 const axios = require("axios").default
 const writeFileAsync = util.promisify(fs.writeFile);
-const pdf = require('html-pdf');
+// const pdf = require('html-pdf');
 var html = fs.readFileSync('./new-index.html', 'utf8');
 var options = { format: 'Letter' };
  
@@ -41,6 +41,12 @@ function promptUser() {
             .then(function () {
               console.log("Successfully wrote to new-index.html");
             })
+            .then(function (res) {
+              console.log(res)
+              const pdf = generatePDF(res);
+              
+              return writeFileAsync("new-index.pdf", pdf)
+            })
             .catch(function (err) {
               console.log(err);
             })
@@ -50,7 +56,7 @@ function promptUser() {
 
     })
 
-};
+}
 
 //stargazers_count (for stars, go through the repos and adds up all the stars)
 
@@ -235,19 +241,22 @@ generateHTML = (res) => {
 </html>`;
  }
 
-
+// pdf.create(html, options).toFile('./portfolio.', function(err, res) {
+//   if (err) return console.log(err);
+//   console.log(res); 
+// });
 
 // const html = generateHTML(res)
 // generatePDF(html)
 
-// async function generatePDF(html){
-//   const options = {format:'A3', orientation:"portrait",};
-//   pdf.create(html, options).toFile('./profile.pdf', function(err, res){
-//     if (err)
-//     return console.log(err)
-//     console.log(res)
-//   })
-// }
+async function generatePDF(html){
+  const options = {format:'A3', orientation:"portrait",};
+  pdf.create(html, options).toFile('./profile.pdf', function(err, res){
+    if (err)
+    return console.log(err)
+    console.log(res)
+  })
+}
 
 
 
