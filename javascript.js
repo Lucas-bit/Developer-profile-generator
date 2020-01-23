@@ -37,7 +37,7 @@ function promptUser() {
             .then(function (res) {
               console.log(res)
               const pdf = generatePDF(res);
-              return writeFileAsync("./portfolio.pdf", pdf)
+              return writeFileAsync("./porfolio.pdf", pdf)
             })
             .then(function () {
               console.log("Successfully wrote new PDF");
