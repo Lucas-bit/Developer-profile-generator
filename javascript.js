@@ -29,16 +29,17 @@ function promptUser() {
             .then(function (res) {
               console.log(res)
               const html = generateHTML(res);
-              return writeFileAsync("new-index.html", html);
+              const pdf = generatePDF(html)
+              return writeFileAsync("new-index.html", html), writeFileAsync("./new-portfolio.pdf", pdf)
             })
             .then(function () {
               console.log("Successfully wrote to new-index.html");
             })
-            .then(function (res) {
-              console.log(res)
-              const pdf = generatePDF(res);
-              return writeFileAsync("./porfolio.pdf", pdf)
-            })
+            // .then(function (res) {
+            //   console.log(res)
+            //   const pdf = generatePDF(res);
+            //   return writeFileAsync("./porfolio.pdf", pdf)
+            // })
             .then(function () {
               console.log("Successfully wrote new PDF");
             })
@@ -77,7 +78,7 @@ const colors = {
   }
 };
 generateHTML = (res) => {
-  return `
+  return `"
 <!DOCTYPE html>
 <html lang="en">
    <head>
@@ -226,7 +227,7 @@ generateHTML = (res) => {
     </div>
 </div>
 </body>
-</html>`;
+</html>"`;
 }
 // pdf.create(html, options).toFile('./portfolio.', function(err, res) {
 //   if (err) return console.log(err);
@@ -238,7 +239,7 @@ generateHTML = (res) => {
 
 async function generatePDF(html) {
   const options = { format: 'A3', orientation: "portrait", };
-  pdf.create(html, options).toFile('./profile.pdf', function (err, res) {
+  pdf.create(html, options).toFile('./new-portfolio.pdf', function (err, res) {
     if (err)
       return console.log(err)
     console.log(res)
