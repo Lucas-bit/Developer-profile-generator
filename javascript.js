@@ -37,7 +37,7 @@ function promptUser() {
             .then(function (res) {
               console.log(res)
               const pdf = generatePDF(res);
-              return writeFileAsync("./profile.pdf", pdf)
+              return writeFileAsync("./portfolio.pdf", pdf)
             })
             .then(function () {
               console.log("Successfully wrote new PDF");
@@ -234,7 +234,9 @@ generateHTML = (res) => {
 // });
 // const html = generateHTML(res)
 // generatePDF(html)
-function generatePDF(html) {
+
+
+async function generatePDF(html) {
   const options = { format: 'A3', orientation: "portrait", };
   pdf.create(html, options).toFile('./profile.pdf', function (err, res) {
     if (err)
