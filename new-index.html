@@ -1,4 +1,4 @@
-"
+
 <!DOCTYPE html>
 <html lang="en">
    <head>
@@ -7,12 +7,12 @@
       <meta http-equiv="X-UA-Compatible" content="ie=edge" />
       <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"/>
       <link href="https://fonts.googleapis.com/css?family=BioRhyme|Cabin&display=swap" rel="stylesheet">
-      <link rel="stylesheet" href = "stylesheet.css">
+
       <title>Document</title>
       <style>
          
          .wrapper {
-         background-color: green;
+         background-color: pink;
          }
          body {
           background-color: white;
@@ -20,7 +20,7 @@
           font-family: 'Cabin', sans-serif;
           }
           main {
-          background-color: green;
+          background-color: pink;
           height: auto;
           padding-top: 30px;
           }
@@ -53,8 +53,8 @@
           display: flex;
           justify-content: center;
           flex-wrap: wrap;
-          background-color: #C1C72C;
-          color: black;
+          background-color: #FF8374;
+          color: white;
           padding: 10px;
           width: 95%;
           border-radius: 6px;
@@ -65,7 +65,7 @@
           border-radius: 50%;
           object-fit: cover;
           margin-top: -75px;
-          border: 6px solid #black;
+          border: 6px solid #FEE24C;
           box-shadow: rgba(0, 0, 0, 0.3) 4px 1px 20px 4px;
           }
           .photo-header h1, .photo-header h2 {
@@ -106,8 +106,8 @@
           .card {
             padding: 20px;
             border-radius: 6px;
-            background-color: #C1C72C;
-            color: black;
+            background-color: #FF8374;
+            color: white;
             margin: 20px;
           }
           
@@ -125,8 +125,34 @@
              zoom: .75; 
            } 
           }
-         
+
+          .image{
+            height: 100px;
+            width: 100px;
+            box-shadow: .1px 5px 40px 1px #000;
+            display: block;
+            margin-left: auto;
+             margin-right: auto;
+        }
+        
+        .display-4{
+            text-align: center
+        }
+        
+        .about-me{
+        text-align:center;
+        }
+        
+        .lead {
+            text-align: center;
+        }
+        
+        .contact-me{
+            text-align: center !important
+        }
       </style>
+      <link rel="stylesheet" href = "stylesheet.css">
+
 </head>
 <body>
   
@@ -134,17 +160,18 @@
   <div class="container wrapper">
     <h1 class="display-4">Hi! My name is Lucas B Gonzalez</h1>
     <img class= "image" src = "https://avatars1.githubusercontent.com/u/55761984?v=4">
-    <h2> About Me: </h2>
+    <h2 class = "about-me"> About Me: </h2>
     <p class="lead"> Github Bio: Student of life, coding, and an avid traveler.
     <p class="lead"> My current location is <span><a href = "https://www.google.com/maps/place/Cleveland, Ohio">Cleveland, Ohio</a></span></p>
     <p class="lead"> I have 16 repositories.</p>
     <p class="lead"> I have 2 follower(s).</p>
-    <h3><span class="badge badge-secondary">Contact Me</span></h3>
-    <div class = contact-me>
-    <p class="list-group-item">My GitHub username is <span><a href = "https://github.com/Lucas-bit">Lucas-bit</a></span> </p>
-    <p class="list-group-item">My portfolio/blog is located here <span><a href = "https://github.com/https://lucas-bit.github.io/Nice-Portfolio/index.html">https://lucas-bit.github.io/Nice-Portfolio/index.html</a></span></p>
+    <h3 class = "contact-me"><span class="badge badge-secondary ">Contact Me</span></h3>
+    <div class = "contact-me">
+    <p class="list-group-item bellow-contact">My GitHub username is <span><a href = "https://github.com/Lucas-bit">Lucas-bit</a></span> </p>
+    <p class="list-group-item bellow-contact">My portfolio/blog is located here <span><a href = "https://github.com/https://lucas-bit.github.io/Nice-Portfolio/index.html">https://lucas-bit.github.io/Nice-Portfolio/index.html</a></span></p>
     </div>
     </div>
 </div>
 </body>
-</html>"
+
+</html>

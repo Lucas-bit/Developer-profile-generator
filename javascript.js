@@ -30,7 +30,7 @@ function promptUser() {
               console.log(res)
               const html = generateHTML(res);
               const pdf = generatePDF(html)
-              return writeFileAsync("new-index.html", html), writeFileAsync("./new-portfolio.pdf", pdf)
+              return writeFileAsync("new-index.html", html), writeFileAsync("./new-portfolio9.pdf", pdf)
             })
             .then(function () {
               console.log("Successfully wrote to new-index.html");
@@ -78,7 +78,7 @@ const colors = {
   }
 };
 generateHTML = (res) => {
-  return `"
+  return `
 <!DOCTYPE html>
 <html lang="en">
    <head>
@@ -87,7 +87,7 @@ generateHTML = (res) => {
       <meta http-equiv="X-UA-Compatible" content="ie=edge" />
       <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"/>
       <link href="https://fonts.googleapis.com/css?family=BioRhyme|Cabin&display=swap" rel="stylesheet">
-      <link rel="stylesheet" href = "stylesheet.css">
+
       <title>Document</title>
       <style>
          
@@ -205,8 +205,34 @@ generateHTML = (res) => {
              zoom: .75; 
            } 
           }
-         
+
+          .image{
+            height: 100px;
+            width: 100px;
+            box-shadow: .1px 5px 40px 1px #000;
+            display: block;
+            margin-left: auto;
+             margin-right: auto;
+        }
+        
+        .display-4{
+            text-align: center
+        }
+        
+        .about-me{
+        text-align:center;
+        }
+        
+        .lead {
+            text-align: center;
+        }
+        
+        .contact-me{
+            text-align: center !important
+        }
       </style>
+      <link rel="stylesheet" href = "stylesheet.css">
+
 </head>
 <body>
   
@@ -214,20 +240,21 @@ generateHTML = (res) => {
   <div class="container wrapper">
     <h1 class="display-4">Hi! My name is ${res.name}</h1>
     <img class= "image" src = "${res.avatar_url}">
-    <h2> About Me: </h2>
+    <h2 class = "about-me"> About Me: </h2>
     <p class="lead"> Github Bio: ${res.bio}
     <p class="lead"> My current location is <span><a href = "https://www.google.com/maps/place/${res.location}">${res.location}</a></span></p>
     <p class="lead"> I have ${res.public_repos} repositories.</p>
     <p class="lead"> I have ${res.followers} follower(s).</p>
-    <h3><span class="badge badge-secondary">Contact Me</span></h3>
-    <div class = contact-me>
-    <p class="list-group-item">My GitHub username is <span><a href = "https://github.com/${res.login}">${res.login}</a></span> </p>
-    <p class="list-group-item">My portfolio/blog is located here <span><a href = "https://github.com/${res.blog}">${res.blog}</a></span></p>
+    <h3 class = "contact-me"><span class="badge badge-secondary ">Contact Me</span></h3>
+    <div class = "contact-me">
+    <p class="list-group-item bellow-contact">My GitHub username is <span><a href = "https://github.com/${res.login}">${res.login}</a></span> </p>
+    <p class="list-group-item bellow-contact">My portfolio/blog is located here <span><a href = "https://github.com/${res.blog}">${res.blog}</a></span></p>
     </div>
     </div>
 </div>
 </body>
-</html>"`;
+
+</html>`;
 }
 // pdf.create(html, options).toFile('./portfolio.', function(err, res) {
 //   if (err) return console.log(err);
@@ -239,7 +266,7 @@ generateHTML = (res) => {
 
 async function generatePDF(html) {
   const options = { format: 'A3', orientation: "portrait", };
-  pdf.create(html, options).toFile('./new-portfolio.pdf', function (err, res) {
+  pdf.create(html, options).toFile('./new-portfolio9.pdf', function (err, res) {
     if (err)
       return console.log(err)
     console.log(res)

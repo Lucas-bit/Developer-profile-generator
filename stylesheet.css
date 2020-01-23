@@ -1,5 +1,22 @@
 .image{
     height: 100px;
     width: 100px;
-    
+    margin-left: 45%;
+    box-shadow: .1px 5px 40px 1px #000;
+}
+
+.display-4{
+    text-align: center
+}
+
+.about-me{
+text-align:center;
+}
+
+.lead {
+    text-align: center;
+}
+
+.contact-me{
+    text-align: center !important
 }
