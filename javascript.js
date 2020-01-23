@@ -1,16 +1,11 @@
-
-
 const inquirer = require("inquirer");
 const fs = require("fs");
 const util = require("util");
 const axios = require("axios").default
 const writeFileAsync = util.promisify(fs.writeFile);
-// const pdf = require('html-pdf');
-var html = fs.readFileSync('./new-index.html', 'utf8');
+const pdf = require('html-pdf');
+var html = fs.readFileSync('new-index.html', 'utf8');
 var options = { format: 'Letter' };
- 
-
-
 function promptUser() {
   return inquirer.prompt([{
     message: "Enter your GitHub username",
@@ -22,7 +17,6 @@ function promptUser() {
     .then(function ({ username, color }) {
       const queryUrl = `https://api.github.com/users/${username}`
       axios.get(queryUrl)
-
         .then((res) => {
           const queryUrlRepos = `https://api.github.com/users/${username}/repos`
           axios.get(queryUrlRepos)
@@ -35,7 +29,6 @@ function promptUser() {
             .then(function (res) {
               console.log(res)
               const html = generateHTML(res);
-
               return writeFileAsync("new-index.html", html);
             })
             .then(function () {
@@ -44,22 +37,18 @@ function promptUser() {
             .then(function (res) {
               console.log(res)
               const pdf = generatePDF(res);
-              
-              return writeFileAsync("new-index.pdf", pdf)
+              return writeFileAsync("./profile.pdf", pdf)
+            })
+            .then(function () {
+              console.log("Successfully wrote new PDF");
             })
             .catch(function (err) {
               console.log(err);
             })
-
         })
-
-
     })
-
 }
-
 //stargazers_count (for stars, go through the repos and adds up all the stars)
-
 //.name somehwere? .JSON?
 const colors = {
   green: {
@@ -87,7 +76,6 @@ const colors = {
     photoBorderColor: "white"
   }
 };
-
 generateHTML = (res) => {
   return `
 <!DOCTYPE html>
@@ -239,32 +227,24 @@ generateHTML = (res) => {
 </div>
 </body>
 </html>`;
- }
-
+}
 // pdf.create(html, options).toFile('./portfolio.', function(err, res) {
 //   if (err) return console.log(err);
 //   console.log(res); 
 // });
-
 // const html = generateHTML(res)
 // generatePDF(html)
-
-async function generatePDF(html){
-  const options = {format:'A3', orientation:"portrait",};
-  pdf.create(html, options).toFile('./profile.pdf', function(err, res){
+function generatePDF(html) {
+  const options = { format: 'A3', orientation: "portrait", };
+  pdf.create(html, options).toFile('./profile.pdf', function (err, res) {
     if (err)
-    return console.log(err)
+      return console.log(err)
     console.log(res)
   })
 }
-
-
-
+//maybe put above function inside .then on line 44
 promptUser()
-// .then(generatePDF())
-
-.catch(function (err) {
-  console.log(err);
-})
-
-
+  // .then(generatePDF())
+  .catch(function (err) {
+    console.log(err);
+  })
