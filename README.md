@@ -15,7 +15,5 @@ Run the following command in the terminal to begin: node.exe javascript.js
 Then follow the questions as prompted. 
 A PDF will be created with the information provided the user can then open. 
 
-<iframe src="https://giphy.com/embed/KFyypA3awaoTrra0FG" width="480" height="320" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/KFyypA3awaoTrra0FG">via GIPHY</a></p> 
-
 # Author 
 Lucas Gonzalez lucasberatudgonzalez@gmail.com https://github.com/Lucas-bit https://lucas-bit.github.io/Nice-Portfolio/
