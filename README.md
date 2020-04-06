@@ -12,7 +12,9 @@ Copy the repository from Github and paste into your desired folder
 
 # Usage
 Run the following command in the terminal to begin: node.exe javascript.js
+
 Then follow the questions as prompted. 
+
 A PDF will be created with the information provided the user can then open. 
 
 # Author 
